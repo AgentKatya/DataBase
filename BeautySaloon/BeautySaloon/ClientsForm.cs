@@ -106,7 +106,7 @@ namespace BeautySaloon
             string id = "";
             id =
                 (string)((DataRowView)записиBindingSource.Current)["Серия_И_Номер_Паспорта"];
-            id = WorkersForm.WorkerForm.ShowSelectForm(id);
+            WorkersForm.WorkerForm.ShowSelectForm(id);
         }
     }
 }
