@@ -57,6 +57,7 @@ namespace BeautySaloon {
             base.Tables.CollectionChanged += schemaChangedHandler;
             base.Relations.CollectionChanged += schemaChangedHandler;
             this.EndInit();
+            this.InitExpressions();
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -68,6 +69,9 @@ namespace BeautySaloon {
                 global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
                 this.Relations.CollectionChanged += schemaChangedHandler1;
+                if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.ExcludeSchema)) {
+                    this.InitExpressions();
+                }
                 return;
             }
             string strSchema = ((string)(info.GetValue("XmlSchema", typeof(string))));
@@ -103,6 +107,7 @@ namespace BeautySaloon {
             }
             else {
                 this.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
+                this.InitExpressions();
             }
             this.GetSerializationData(info, context);
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -214,6 +219,7 @@ namespace BeautySaloon {
         public override global::System.Data.DataSet Clone() {
             Beauty_SaloonDataSet cln = ((Beauty_SaloonDataSet)(base.Clone()));
             cln.InitVars();
+            cln.InitExpressions();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
         }
@@ -339,7 +345,7 @@ namespace BeautySaloon {
             this.Namespace = "http://tempuri.org/Beauty_SaloonDataSet.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableЗаписи = new ЗаписиDataTable();
+            this.tableЗаписи = new ЗаписиDataTable(false);
             base.Tables.Add(this.tableЗаписи);
             this.tableКлиент = new КлиентDataTable();
             base.Tables.Add(this.tableКлиент);
@@ -347,9 +353,9 @@ namespace BeautySaloon {
             base.Tables.Add(this.tableКосметика_Для_Услуги);
             this.tableКосметические_Товары = new Косметические_ТоварыDataTable();
             base.Tables.Add(this.tableКосметические_Товары);
-            this.tableПерсонал = new ПерсоналDataTable();
+            this.tableПерсонал = new ПерсоналDataTable(false);
             base.Tables.Add(this.tableПерсонал);
-            this.tableУслуга = new УслугаDataTable();
+            this.tableУслуга = new УслугаDataTable(false);
             base.Tables.Add(this.tableУслуга);
             this.relationFK_Записи_Клиент = new global::System.Data.DataRelation("FK_Записи_Клиент", new global::System.Data.DataColumn[] {
                         this.tableКлиент.Номер_ТелефонаColumn}, new global::System.Data.DataColumn[] {
@@ -464,6 +470,14 @@ namespace BeautySaloon {
             return type;
         }
         
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        private void InitExpressions() {
+            this.Записи.О_СотрудникеColumn.Expression = "Parent(FK_Записи_Персонал).Инфо";
+            this.Персонал.ИнфоColumn.Expression = "ФИО + \' \' + Должность";
+            this.Услуга.ИтогоColumn.Expression = "Цена*(1-Скидка)";
+        }
+        
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         public delegate void ЗаписиRowChangeEventHandler(object sender, ЗаписиRowChangeEvent e);
         
@@ -499,12 +513,23 @@ namespace BeautySaloon {
             
             private global::System.Data.DataColumn columnНомер_Телефона;
             
+            private global::System.Data.DataColumn columnО_Сотруднике;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ЗаписиDataTable() {
+            public ЗаписиDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ЗаписиDataTable(bool initExpressions) {
                 this.TableName = "Записи";
                 this.BeginInit();
                 this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
                 this.EndInit();
             }
             
@@ -574,6 +599,14 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn О_СотрудникеColumn {
+                get {
+                    return this.columnО_Сотруднике;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -609,12 +642,35 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ЗаписиRow AddЗаписиRow(int ID_Записи, System.DateTime Дата, System.TimeSpan Время, ПерсоналRow parentПерсоналRowByFK_Записи_Персонал, КлиентRow parentКлиентRowByFK_Записи_Клиент) {
+            public ЗаписиRow AddЗаписиRow(System.DateTime Дата, System.TimeSpan Время, ПерсоналRow parentПерсоналRowByFK_Записи_Персонал, КлиентRow parentКлиентRowByFK_Записи_Клиент, string О_Сотруднике) {
                 ЗаписиRow rowЗаписиRow = ((ЗаписиRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ID_Записи,
+                        null,
                         Дата,
                         Время,
+                        null,
+                        null,
+                        О_Сотруднике};
+                if ((parentПерсоналRowByFK_Записи_Персонал != null)) {
+                    columnValuesArray[3] = parentПерсоналRowByFK_Записи_Персонал[0];
+                }
+                if ((parentКлиентRowByFK_Записи_Клиент != null)) {
+                    columnValuesArray[4] = parentКлиентRowByFK_Записи_Клиент[0];
+                }
+                rowЗаписиRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowЗаписиRow);
+                return rowЗаписиRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ЗаписиRow AddЗаписиRow(System.DateTime Дата, System.TimeSpan Время, ПерсоналRow parentПерсоналRowByFK_Записи_Персонал, КлиентRow parentКлиентRowByFK_Записи_Клиент) {
+                ЗаписиRow rowЗаписиRow = ((ЗаписиRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Дата,
+                        Время,
+                        null,
                         null,
                         null};
                 if ((parentПерсоналRowByFK_Записи_Персонал != null)) {
@@ -657,6 +713,7 @@ namespace BeautySaloon {
                 this.columnВремя = base.Columns["Время"];
                 this.columnСерия_И_Номер_Паспорта = base.Columns["Серия_И_Номер_Паспорта"];
                 this.columnНомер_Телефона = base.Columns["Номер_Телефона"];
+                this.columnО_Сотруднике = base.Columns["О_Сотруднике"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -672,16 +729,21 @@ namespace BeautySaloon {
                 base.Columns.Add(this.columnСерия_И_Номер_Паспорта);
                 this.columnНомер_Телефона = new global::System.Data.DataColumn("Номер_Телефона", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnНомер_Телефона);
+                this.columnО_Сотруднике = new global::System.Data.DataColumn("О_Сотруднике", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnО_Сотруднике);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnID_Записи}, true));
+                this.columnID_Записи.AutoIncrement = true;
+                this.columnID_Записи.AutoIncrementSeed = 1;
                 this.columnID_Записи.AllowDBNull = false;
+                this.columnID_Записи.ReadOnly = true;
                 this.columnID_Записи.Unique = true;
                 this.columnДата.AllowDBNull = false;
                 this.columnВремя.AllowDBNull = false;
-                this.columnСерия_И_Номер_Паспорта.AllowDBNull = false;
                 this.columnСерия_И_Номер_Паспорта.MaxLength = 11;
                 this.columnНомер_Телефона.AllowDBNull = false;
                 this.columnНомер_Телефона.MaxLength = 10;
+                this.columnО_Сотруднике.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -700,6 +762,12 @@ namespace BeautySaloon {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
                 return typeof(ЗаписиRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            private void InitExpressions() {
+                this.О_СотрудникеColumn.Expression = "Parent(FK_Записи_Персонал).Инфо";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1686,12 +1754,23 @@ namespace BeautySaloon {
             
             private global::System.Data.DataColumn columnДети;
             
+            private global::System.Data.DataColumn columnИнфо;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ПерсоналDataTable() {
+            public ПерсоналDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ПерсоналDataTable(bool initExpressions) {
                 this.TableName = "Персонал";
                 this.BeginInit();
                 this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
                 this.EndInit();
             }
             
@@ -1769,6 +1848,14 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ИнфоColumn {
+                get {
+                    return this.columnИнфо;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1804,6 +1891,26 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ПерсоналRow AddПерсоналRow(string Серия_И_Номер_Паспорта, string ФИО, string Должность, УслугаRow parentУслугаRowByFK_Персонал_Услуга, object Фото, bool Дети, string Инфо) {
+                ПерсоналRow rowПерсоналRow = ((ПерсоналRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Серия_И_Номер_Паспорта,
+                        ФИО,
+                        Должность,
+                        null,
+                        Фото,
+                        Дети,
+                        Инфо};
+                if ((parentУслугаRowByFK_Персонал_Услуга != null)) {
+                    columnValuesArray[3] = parentУслугаRowByFK_Персонал_Услуга[0];
+                }
+                rowПерсоналRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowПерсоналRow);
+                return rowПерсоналRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public ПерсоналRow AddПерсоналRow(string Серия_И_Номер_Паспорта, string ФИО, string Должность, УслугаRow parentУслугаRowByFK_Персонал_Услуга, object Фото, bool Дети) {
                 ПерсоналRow rowПерсоналRow = ((ПерсоналRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
@@ -1812,7 +1919,8 @@ namespace BeautySaloon {
                         Должность,
                         null,
                         Фото,
-                        Дети};
+                        Дети,
+                        null};
                 if ((parentУслугаRowByFK_Персонал_Услуга != null)) {
                     columnValuesArray[3] = parentУслугаRowByFK_Персонал_Услуга[0];
                 }
@@ -1851,6 +1959,7 @@ namespace BeautySaloon {
                 this.columnНомер_Услуги = base.Columns["Номер_Услуги"];
                 this.columnФото = base.Columns["Фото"];
                 this.columnДети = base.Columns["Дети"];
+                this.columnИнфо = base.Columns["Инфо"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1868,6 +1977,8 @@ namespace BeautySaloon {
                 base.Columns.Add(this.columnФото);
                 this.columnДети = new global::System.Data.DataColumn("Дети", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnДети);
+                this.columnИнфо = new global::System.Data.DataColumn("Инфо", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnИнфо);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnСерия_И_Номер_Паспорта}, true));
                 this.columnСерия_И_Номер_Паспорта.AllowDBNull = false;
@@ -1877,7 +1988,9 @@ namespace BeautySaloon {
                 this.columnФИО.MaxLength = 100;
                 this.columnДолжность.AllowDBNull = false;
                 this.columnДолжность.MaxLength = 9;
+                this.columnНомер_Услуги.AutoIncrementSeed = 1;
                 this.columnНомер_Услуги.AllowDBNull = false;
+                this.columnИнфо.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1896,6 +2009,12 @@ namespace BeautySaloon {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
                 return typeof(ПерсоналRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            private void InitExpressions() {
+                this.ИнфоColumn.Expression = "ФИО + \' \' + Должность";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2017,12 +2136,25 @@ namespace BeautySaloon {
             
             private global::System.Data.DataColumn columnНазвание;
             
+            private global::System.Data.DataColumn columnСкидка;
+            
+            private global::System.Data.DataColumn columnИтого;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public УслугаDataTable() {
+            public УслугаDataTable() : 
+                    this(false) {
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public УслугаDataTable(bool initExpressions) {
                 this.TableName = "Услуга";
                 this.BeginInit();
                 this.InitClass();
+                if ((initExpressions == true)) {
+                    this.InitExpressions();
+                }
                 this.EndInit();
             }
             
@@ -2076,6 +2208,22 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn СкидкаColumn {
+                get {
+                    return this.columnСкидка;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn ИтогоColumn {
+                get {
+                    return this.columnИтого;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2111,12 +2259,29 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public УслугаRow AddУслугаRow(int Номер_Услуги, decimal Цена, string Название) {
+            public УслугаRow AddУслугаRow(int Номер_Услуги, decimal Цена, string Название, decimal Скидка, decimal Итого) {
                 УслугаRow rowУслугаRow = ((УслугаRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Номер_Услуги,
                         Цена,
-                        Название};
+                        Название,
+                        Скидка,
+                        Итого};
+                rowУслугаRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowУслугаRow);
+                return rowУслугаRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public УслугаRow AddУслугаRow(int Номер_Услуги, decimal Цена, string Название, decimal Скидка) {
+                УслугаRow rowУслугаRow = ((УслугаRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Номер_Услуги,
+                        Цена,
+                        Название,
+                        Скидка,
+                        null};
                 rowУслугаRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowУслугаRow);
                 return rowУслугаRow;
@@ -2149,6 +2314,8 @@ namespace BeautySaloon {
                 this.columnНомер_Услуги = base.Columns["Номер_Услуги"];
                 this.columnЦена = base.Columns["Цена"];
                 this.columnНазвание = base.Columns["Название"];
+                this.columnСкидка = base.Columns["Скидка"];
+                this.columnИтого = base.Columns["Итого"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2160,6 +2327,10 @@ namespace BeautySaloon {
                 base.Columns.Add(this.columnЦена);
                 this.columnНазвание = new global::System.Data.DataColumn("Название", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnНазвание);
+                this.columnСкидка = new global::System.Data.DataColumn("Скидка", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnСкидка);
+                this.columnИтого = new global::System.Data.DataColumn("Итого", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnИтого);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnНомер_Услуги}, true));
                 this.columnНомер_Услуги.AllowDBNull = false;
@@ -2167,6 +2338,8 @@ namespace BeautySaloon {
                 this.columnЦена.AllowDBNull = false;
                 this.columnНазвание.AllowDBNull = false;
                 this.columnНазвание.MaxLength = 50;
+                this.columnСкидка.DefaultValue = ((decimal)(0m));
+                this.columnИтого.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2185,6 +2358,12 @@ namespace BeautySaloon {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             protected override global::System.Type GetRowType() {
                 return typeof(УслугаRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            private void InitExpressions() {
+                this.ИтогоColumn.Expression = "Цена*(1-Скидка)";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2344,7 +2523,12 @@ namespace BeautySaloon {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public string Серия_И_Номер_Паспорта {
                 get {
-                    return ((string)(this[this.tableЗаписи.Серия_И_Номер_ПаспортаColumn]));
+                    try {
+                        return ((string)(this[this.tableЗаписи.Серия_И_Номер_ПаспортаColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Серия_И_Номер_Паспорта\' в таблице \'Записи\' равно DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableЗаписи.Серия_И_Номер_ПаспортаColumn] = value;
@@ -2359,6 +2543,22 @@ namespace BeautySaloon {
                 }
                 set {
                     this[this.tableЗаписи.Номер_ТелефонаColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string О_Сотруднике {
+                get {
+                    try {
+                        return ((string)(this[this.tableЗаписи.О_СотрудникеColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'О_Сотруднике\' в таблице \'Записи\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableЗаписи.О_СотрудникеColumn] = value;
                 }
             }
             
@@ -2382,6 +2582,30 @@ namespace BeautySaloon {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Записи_Персонал"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsСерия_И_Номер_ПаспортаNull() {
+                return this.IsNull(this.tableЗаписи.Серия_И_Номер_ПаспортаColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetСерия_И_Номер_ПаспортаNull() {
+                this[this.tableЗаписи.Серия_И_Номер_ПаспортаColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsО_СотрудникеNull() {
+                return this.IsNull(this.tableЗаписи.О_СотрудникеColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetО_СотрудникеNull() {
+                this[this.tableЗаписи.О_СотрудникеColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2671,6 +2895,22 @@ namespace BeautySaloon {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Инфо {
+                get {
+                    try {
+                        return ((string)(this[this.tableПерсонал.ИнфоColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Инфо\' в таблице \'Персонал\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableПерсонал.ИнфоColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public УслугаRow УслугаRow {
                 get {
                     return ((УслугаRow)(this.GetParentRow(this.Table.ParentRelations["FK_Персонал_Услуга"])));
@@ -2702,6 +2942,18 @@ namespace BeautySaloon {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetДетиNull() {
                 this[this.tableПерсонал.ДетиColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsИнфоNull() {
+                return this.IsNull(this.tableПерсонал.ИнфоColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetИнфоNull() {
+                this[this.tableПерсонал.ИнфоColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2761,6 +3013,62 @@ namespace BeautySaloon {
                 set {
                     this[this.tableУслуга.НазваниеColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public decimal Скидка {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableУслуга.СкидкаColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Скидка\' в таблице \'Услуга\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableУслуга.СкидкаColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public decimal Итого {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableУслуга.ИтогоColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Итого\' в таблице \'Услуга\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableУслуга.ИтогоColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsСкидкаNull() {
+                return this.IsNull(this.tableУслуга.СкидкаColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetСкидкаNull() {
+                this[this.tableУслуга.СкидкаColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsИтогоNull() {
+                return this.IsNull(this.tableУслуга.ИтогоColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetИтогоNull() {
+                this[this.tableУслуга.ИтогоColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3173,8 +3481,8 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT ID_Записи, Дата, Время, Серия_И_Номер_Паспорта, Номер_Телефона FROM dbo.За" +
-                "писи";
+            this._commandCollection[0].CommandText = "SELECT ID_Записи, Дата, Время, Серия_И_Номер_Паспорта, Номер_Телефона FROM Записи" +
+                "";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -3197,7 +3505,7 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual Beauty_SaloonDataSet.ЗаписиDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            Beauty_SaloonDataSet.ЗаписиDataTable dataTable = new Beauty_SaloonDataSet.ЗаписиDataTable();
+            Beauty_SaloonDataSet.ЗаписиDataTable dataTable = new Beauty_SaloonDataSet.ЗаписиDataTable(true);
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -3240,7 +3548,7 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_Дата));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((System.TimeSpan)(Original_Время));
             if ((Original_Серия_И_Номер_Паспорта == null)) {
-                throw new global::System.ArgumentNullException("Original_Серия_И_Номер_Паспорта");
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_Серия_И_Номер_Паспорта));
@@ -3276,7 +3584,7 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
             this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(Дата));
             this.Adapter.InsertCommand.Parameters[2].Value = ((System.TimeSpan)(Время));
             if ((Серия_И_Номер_Паспорта == null)) {
-                throw new global::System.ArgumentNullException("Серия_И_Номер_Паспорта");
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Серия_И_Номер_Паспорта));
@@ -3312,7 +3620,7 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
             this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(Дата));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((System.TimeSpan)(Время));
             if ((Серия_И_Номер_Паспорта == null)) {
-                throw new global::System.ArgumentNullException("Серия_И_Номер_Паспорта");
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Серия_И_Номер_Паспорта));
@@ -3327,7 +3635,7 @@ SELECT ID_Записи, Дата, Время, Серия_И_Номер_Пасп�
             this.Adapter.UpdateCommand.Parameters[6].Value = ((System.DateTime)(Original_Дата));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((System.TimeSpan)(Original_Время));
             if ((Original_Серия_И_Номер_Паспорта == null)) {
-                throw new global::System.ArgumentNullException("Original_Серия_И_Номер_Паспорта");
+                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Серия_И_Номер_Паспорта));
@@ -4585,7 +4893,7 @@ SELECT Серия_И_Номер_Паспорта, ФИО, Должность, Н
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual Beauty_SaloonDataSet.ПерсоналDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            Beauty_SaloonDataSet.ПерсоналDataTable dataTable = new Beauty_SaloonDataSet.ПерсоналDataTable();
+            Beauty_SaloonDataSet.ПерсоналDataTable dataTable = new Beauty_SaloonDataSet.ПерсоналDataTable(true);
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -4958,7 +5266,7 @@ SELECT Номер_Услуги, Цена, Название FROM Услуга WHE
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual Beauty_SaloonDataSet.УслугаDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            Beauty_SaloonDataSet.УслугаDataTable dataTable = new Beauty_SaloonDataSet.УслугаDataTable();
+            Beauty_SaloonDataSet.УслугаDataTable dataTable = new Beauty_SaloonDataSet.УслугаDataTable(true);
             this.Adapter.Fill(dataTable);
             return dataTable;
         }

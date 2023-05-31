@@ -32,18 +32,30 @@ namespace BeautySaloon
 
         private void услугаBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
-            this.услугаBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
-
+            try
+            {
+                this.Validate();
+                this.услугаBindingSource.EndEdit();
+                this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void услугаBindingNavigatorSaveItem_Click_1(object sender, EventArgs e)
         {
-            this.Validate();
-            this.услугаBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
-
+            try
+            {
+                this.Validate();
+                this.услугаBindingSource.EndEdit();
+                this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void ServicesForm_Load(object sender, EventArgs e)

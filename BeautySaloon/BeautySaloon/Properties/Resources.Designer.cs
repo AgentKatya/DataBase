@@ -73,9 +73,29 @@ namespace BeautySaloon.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Clients_24x24 {
+            get {
+                object obj = ResourceManager.GetObject("Clients_24x24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ExitIcon_48x48 {
             get {
                 object obj = ResourceManager.GetObject("ExitIcon_48x48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Find_67x67 {
+            get {
+                object obj = ResourceManager.GetObject("Find_67x67", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

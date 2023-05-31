@@ -41,5 +41,10 @@ namespace BeautySaloon
         {
             WorkersForm.WorkerForm.Show();
         }
+
+        private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClientsForm.ClientForm.Show();
+        }
     }
 }

@@ -28,14 +28,22 @@ namespace BeautySaloon
         public WorkersForm()
         {
             InitializeComponent();
+            toolStripButtonOK.Visible = false;
+            персоналBindingSource.Position = 0;
         }
 
         private void персоналBindingNavigatorSaveItem_Click(object sender, EventArgs e)
         {
-            this.Validate();
-            this.персоналBindingSource.EndEdit();
-            this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
-
+            try
+            {
+                this.Validate();
+                this.персоналBindingSource.EndEdit();
+                this.tableAdapterManager.UpdateAll(this.beauty_SaloonDataSet);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void WorkersForm_Load(object sender, EventArgs e)
@@ -90,6 +98,105 @@ namespace BeautySaloon
                 }
             }
 
+        }
+
+        string GetSelectedFieldName()
+        {
+            return 
+                персоналDataGridView.Columns[персоналDataGridView.CurrentCell.ColumnIndex].DataPropertyName;
+        }
+
+        private void toolStripButtonFind_Click(object sender, EventArgs e)
+        {
+            if (toolStripTextBoxFind.Text == "")
+            {
+                MessageBox.Show("Вы ничего не задали", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            int indexPos;
+            try
+            {
+                indexPos = персоналBindingSource.Find(
+                    GetSelectedFieldName(), toolStripTextBoxFind.Text);
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Ошибка поиска \n" + err.Message);
+                return;
+            }
+            if (indexPos > -1)
+            {
+                персоналBindingSource.Position = indexPos;
+            }
+            else
+            {
+                MessageBox.Show("Таких сотрудников нет", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                персоналBindingSource.Position = 0;
+            }
+        }
+
+        private void checkBoxFind_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxFind.Checked)
+            {
+                if (toolStripTextBoxFind.Text == "")
+                {
+                    MessageBox.Show("Вы ничего не задали", "Внимание",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    try
+                    {
+                        персоналBindingSource.Filter =
+                            GetSelectedFieldName() + "='" + toolStripTextBoxFind.Text + "'";
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show("Ошибка фильтрации \n" + err.Message);
+                    }
+                }
+            }
+            else
+            {
+                персоналBindingSource.Filter = "";
+            }
+            if (персоналBindingSource.Count == 0)
+            {
+                MessageBox.Show("Нет таких");
+                персоналBindingSource.Filter = "";
+                checkBoxFind.Checked = false;
+            }
+
+        }
+
+        string idCurrent = "";
+
+        public string ShowSelectForm(string id)
+        {
+            toolStripButtonOK.Visible = true;
+            idCurrent = id;
+            if (ShowDialog() == DialogResult.OK)
+            {
+                return (string)((DataRowView)персоналBindingSource.Current)["Серия_И_Номер_Паспорта"];
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private void toolStripButtonOK_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+        }
+
+        private void WorkersForm_Shown(object sender, EventArgs e)
+        {
+            персоналBindingSource.Position =
+                персоналBindingSource.Find("Серия_И_Номер_Паспорта", idCurrent);
         }
     }
 }
