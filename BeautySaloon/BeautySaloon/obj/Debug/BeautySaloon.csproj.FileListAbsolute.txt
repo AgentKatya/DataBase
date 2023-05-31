@@ -1,0 +1,16 @@
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\BeautySaloon.exe.config
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\BeautySaloon.exe
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\BeautySaloon.pdb
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.csproj.AssemblyReference.cache
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.csproj.SuggestedBindingRedirects.cache
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.Properties.Resources.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.csproj.GenerateResource.cache
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.csproj.CoreCompileInputs.cache
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.exe
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.pdb
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.g.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.MainForm.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\Beauty_Saloon.mdf
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\Beauty_Saloon_log.ldf
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.ServicesForm.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.WorkersForm.resources
