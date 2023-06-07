@@ -15,3 +15,5 @@ C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\bin\Debug\Beauty_
 C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.ServicesForm.resources
 C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.WorkersForm.resources
 C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.ClientsForm.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.CosmeticGoods.resources
+C:\Users\miste\source\repos\DataBase\BeautySaloon\BeautySaloon\obj\Debug\BeautySaloon.GoodsForService.resources

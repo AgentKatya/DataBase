@@ -46,5 +46,15 @@ namespace BeautySaloon
         {
             ClientsForm.ClientForm.Show();
         }
+
+        private void косметикаДляУслугиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GoodsForService.ServiceGoodsForm.Show();
+        }
+
+        private void косметическиеТоварыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CosmeticGoods.GoodsForm.Show();
+        }
     }
 }

@@ -77,6 +77,18 @@
     <Compile Include="ClientsForm.Designer.cs">
       <DependentUpon>ClientsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CosmeticGoods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CosmeticGoods.Designer.cs">
+      <DependentUpon>CosmeticGoods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GoodsForService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GoodsForService.Designer.cs">
+      <DependentUpon>GoodsForService.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +111,12 @@
     </Compile>
     <EmbeddedResource Include="ClientsForm.resx">
       <DependentUpon>ClientsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CosmeticGoods.resx">
+      <DependentUpon>CosmeticGoods.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GoodsForService.resx">
+      <DependentUpon>GoodsForService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

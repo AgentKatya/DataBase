@@ -103,10 +103,13 @@ namespace BeautySaloon
 
         private void записиDataGridView_Click(object sender, EventArgs e)
         {
-            string id = "";
-            id =
-                (string)((DataRowView)записиBindingSource.Current)["Серия_И_Номер_Паспорта"];
-            WorkersForm.WorkerForm.ShowSelectForm(id);
+            if (записиDataGridView.CurrentCell.ColumnIndex == 4)
+            {
+                string id = "";
+                id =
+                    (string)((DataRowView)записиBindingSource.Current)["Серия_И_Номер_Паспорта"];
+                WorkersForm.WorkerForm.ShowSelectForm(id);
+            }
         }
     }
 }

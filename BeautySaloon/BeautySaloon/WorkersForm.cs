@@ -48,6 +48,8 @@ namespace BeautySaloon
 
         private void WorkersForm_Load(object sender, EventArgs e)
         {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "beauty_SaloonDataSet.Записи". При необходимости она может быть перемещена или удалена.
+            this.записиTableAdapter.Fill(this.beauty_SaloonDataSet.Записи);
             // TODO: данная строка кода позволяет загрузить данные в таблицу "beauty_SaloonDataSet.Персонал". При необходимости она может быть перемещена или удалена.
             this.персоналTableAdapter.Fill(this.beauty_SaloonDataSet.Персонал);
 
@@ -197,6 +199,24 @@ namespace BeautySaloon
         {
             персоналBindingSource.Position =
                 персоналBindingSource.Find("Серия_И_Номер_Паспорта", idCurrent);
+        }
+
+        private void персоналDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            for (int i = 0; i < записиDataGridView.Rows.Count; i++)
+            {
+                записиDataGridView.Rows[i].Selected = false;
+            }
+            if (персоналDataGridView.CurrentCell.ColumnIndex == 0)
+            {
+                for (int i = 0; i < записиDataGridView.Rows.Count; i++)
+                {
+                    if (string.Equals(записиDataGridView.Rows[i].Cells[3].Value, персоналDataGridView.CurrentRow.Cells[0].Value))
+                    {
+                        записиDataGridView.Rows[i].Selected = true;
+                    }
+                }
+            }
         }
     }
 }

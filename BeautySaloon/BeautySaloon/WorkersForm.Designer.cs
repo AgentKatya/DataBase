@@ -51,6 +51,11 @@
             this.toolStripTextBoxFind = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButtonFind = new System.Windows.Forms.ToolStripButton();
             this.персоналDataGridView = new System.Windows.Forms.DataGridView();
+            this.Серия_И_Номер_Паспорта = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Дети = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.OpenPhotoButton = new System.Windows.Forms.Button();
             this.openFileDialogPhoto = new System.Windows.Forms.OpenFileDialog();
             this.персоналTableAdapter = new BeautySaloon.Beauty_SaloonDataSetTableAdapters.ПерсоналTableAdapter();
@@ -59,11 +64,16 @@
             this.beauty_SaloonDataSet2 = new BeautySaloon.Beauty_SaloonDataSet();
             this.фотоPictureBox = new System.Windows.Forms.PictureBox();
             this.checkBoxFind = new System.Windows.Forms.CheckBox();
-            this.Серия_И_Номер_Паспорта = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Дети = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.записиBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.записиTableAdapter = new BeautySaloon.Beauty_SaloonDataSetTableAdapters.ЗаписиTableAdapter();
+            this.записиDataGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             фотоLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.персоналBindingNavigator)).BeginInit();
             this.персоналBindingNavigator.SuspendLayout();
@@ -73,6 +83,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.beauty_SaloonDataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.beauty_SaloonDataSet2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.фотоPictureBox)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.записиBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.записиDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // фотоLabel
@@ -181,7 +194,6 @@
             // 
             this.bindingNavigatorPositionItem.AccessibleName = "Положение";
             this.bindingNavigatorPositionItem.AutoSize = false;
-            this.bindingNavigatorPositionItem.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
             this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 23);
             this.bindingNavigatorPositionItem.Text = "0";
@@ -242,7 +254,6 @@
             // 
             // toolStripTextBoxFind
             // 
-            this.toolStripTextBoxFind.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBoxFind.Name = "toolStripTextBoxFind";
             this.toolStripTextBoxFind.Size = new System.Drawing.Size(100, 25);
             // 
@@ -275,7 +286,45 @@
             this.персоналDataGridView.Name = "персоналDataGridView";
             this.персоналDataGridView.Size = new System.Drawing.Size(820, 220);
             this.персоналDataGridView.TabIndex = 1;
+            this.персоналDataGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.персоналDataGridView_CellContentClick);
             this.персоналDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.персоналDataGridView_CellFormatting);
+            // 
+            // Серия_И_Номер_Паспорта
+            // 
+            this.Серия_И_Номер_Паспорта.DataPropertyName = "Серия_И_Номер_Паспорта";
+            this.Серия_И_Номер_Паспорта.HeaderText = "Серия_И_Номер_Паспрота";
+            this.Серия_И_Номер_Паспорта.Name = "Серия_И_Номер_Паспорта";
+            this.Серия_И_Номер_Паспорта.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "ФИО";
+            this.dataGridViewTextBoxColumn2.HeaderText = "ФИО";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 200;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Должность";
+            this.dataGridViewTextBoxColumn3.HeaderText = "Должность";
+            this.dataGridViewTextBoxColumn3.Items.AddRange(new object[] {
+            "Менеджер",
+            "Сотрудник"});
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "Номер_Услуги";
+            this.dataGridViewTextBoxColumn4.HeaderText = "Номер_Услуги";
+            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            // 
+            // Дети
+            // 
+            this.Дети.DataPropertyName = "Дети";
+            this.Дети.HeaderText = "Дети";
+            this.Дети.Name = "Дети";
             // 
             // OpenPhotoButton
             // 
@@ -337,48 +386,87 @@
             this.checkBoxFind.UseVisualStyleBackColor = true;
             this.checkBoxFind.CheckedChanged += new System.EventHandler(this.checkBoxFind_CheckedChanged);
             // 
-            // Серия_И_Номер_Паспорта
+            // groupBox1
             // 
-            this.Серия_И_Номер_Паспорта.DataPropertyName = "Серия_И_Номер_Паспорта";
-            this.Серия_И_Номер_Паспорта.HeaderText = "Серия_И_Номер_Паспрота";
-            this.Серия_И_Номер_Паспорта.Name = "Серия_И_Номер_Паспорта";
-            this.Серия_И_Номер_Паспорта.Width = 200;
+            this.groupBox1.Controls.Add(this.записиDataGridView);
+            this.groupBox1.Location = new System.Drawing.Point(12, 255);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(484, 318);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Записи";
             // 
-            // dataGridViewTextBoxColumn2
+            // записиBindingSource
             // 
-            this.dataGridViewTextBoxColumn2.DataPropertyName = "ФИО";
-            this.dataGridViewTextBoxColumn2.HeaderText = "ФИО";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 200;
+            this.записиBindingSource.DataMember = "Записи";
+            this.записиBindingSource.DataSource = this.beauty_SaloonDataSet;
             // 
-            // dataGridViewTextBoxColumn3
+            // записиTableAdapter
             // 
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "Должность";
-            this.dataGridViewTextBoxColumn3.HeaderText = "Должность";
-            this.dataGridViewTextBoxColumn3.Items.AddRange(new object[] {
-            "Менеджер",
-            "Сотрудник"});
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewTextBoxColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.записиTableAdapter.ClearBeforeFill = true;
             // 
-            // dataGridViewTextBoxColumn4
+            // записиDataGridView
             // 
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Номер_Услуги";
-            this.dataGridViewTextBoxColumn4.HeaderText = "Номер_Услуги";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.записиDataGridView.AutoGenerateColumns = false;
+            this.записиDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.записиDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn9});
+            this.записиDataGridView.DataSource = this.записиBindingSource;
+            this.записиDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.записиDataGridView.Location = new System.Drawing.Point(3, 16);
+            this.записиDataGridView.Name = "записиDataGridView";
+            this.записиDataGridView.Size = new System.Drawing.Size(478, 299);
+            this.записиDataGridView.TabIndex = 0;
             // 
-            // Дети
+            // dataGridViewTextBoxColumn1
             // 
-            this.Дети.DataPropertyName = "Дети";
-            this.Дети.HeaderText = "Дети";
-            this.Дети.Name = "Дети";
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "ID_Записи";
+            this.dataGridViewTextBoxColumn1.HeaderText = "ID_Записи";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Дата";
+            this.dataGridViewTextBoxColumn5.HeaderText = "Дата";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Время";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Время";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "Серия_И_Номер_Паспорта";
+            this.dataGridViewTextBoxColumn7.HeaderText = "Серия_И_Номер_Паспорта";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "Номер_Телефона";
+            this.dataGridViewTextBoxColumn8.HeaderText = "Номер_Телефона";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "О_Сотруднике";
+            this.dataGridViewTextBoxColumn9.HeaderText = "О_Сотруднике";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
             // 
             // WorkersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 450);
+            this.ClientSize = new System.Drawing.Size(820, 573);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkBoxFind);
             this.Controls.Add(this.OpenPhotoButton);
             this.Controls.Add(фотоLabel);
@@ -399,6 +487,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.beauty_SaloonDataSet1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.beauty_SaloonDataSet2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.фотоPictureBox)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.записиBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.записиDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -439,5 +530,15 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Дети;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.BindingSource записиBindingSource;
+        private Beauty_SaloonDataSetTableAdapters.ЗаписиTableAdapter записиTableAdapter;
+        private System.Windows.Forms.DataGridView записиDataGridView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
     }
 }
