@@ -103,6 +103,12 @@
     <Compile Include="ServicesForm.Designer.cs">
       <DependentUpon>ServicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SQLForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SQLForm.Designer.cs">
+      <DependentUpon>SQLForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorkersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,9 @@
     </Compile>
     <EmbeddedResource Include="ServicesForm.resx">
       <DependentUpon>ServicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SQLForm.resx">
+      <DependentUpon>SQLForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WorkersForm.resx">
       <DependentUpon>WorkersForm.cs</DependentUpon>

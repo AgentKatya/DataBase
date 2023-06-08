@@ -56,5 +56,10 @@ namespace BeautySaloon
         {
             CosmeticGoods.GoodsForm.Show();
         }
+
+        private void запросыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SQLForm.QueryForm.Show();
+        }
     }
 }

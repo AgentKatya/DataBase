@@ -36,6 +36,8 @@
             this.directoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.косметикаДляУслугиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.косметическиеТоварыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.документыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -48,8 +50,7 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.косметикаДляУслугиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.косметическиеТоварыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.запросыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
@@ -123,10 +124,25 @@
             this.workersToolStripMenuItem.Text = "Персонал";
             this.workersToolStripMenuItem.Click += new System.EventHandler(this.workersToolStripMenuItem_Click);
             // 
+            // косметикаДляУслугиToolStripMenuItem
+            // 
+            this.косметикаДляУслугиToolStripMenuItem.Name = "косметикаДляУслугиToolStripMenuItem";
+            this.косметикаДляУслугиToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.косметикаДляУслугиToolStripMenuItem.Text = "Косметика для услуги";
+            this.косметикаДляУслугиToolStripMenuItem.Click += new System.EventHandler(this.косметикаДляУслугиToolStripMenuItem_Click);
+            // 
+            // косметическиеТоварыToolStripMenuItem
+            // 
+            this.косметическиеТоварыToolStripMenuItem.Name = "косметическиеТоварыToolStripMenuItem";
+            this.косметическиеТоварыToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.косметическиеТоварыToolStripMenuItem.Text = "Косметические товары";
+            this.косметическиеТоварыToolStripMenuItem.Click += new System.EventHandler(this.косметическиеТоварыToolStripMenuItem_Click);
+            // 
             // документыToolStripMenuItem
             // 
             this.документыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.клиентыToolStripMenuItem});
+            this.клиентыToolStripMenuItem,
+            this.запросыToolStripMenuItem});
             this.документыToolStripMenuItem.Name = "документыToolStripMenuItem";
             this.документыToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.документыToolStripMenuItem.Text = "Документы";
@@ -135,7 +151,7 @@
             // 
             this.клиентыToolStripMenuItem.Image = global::BeautySaloon.Properties.Resources.Clients_24x24;
             this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
-            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.клиентыToolStripMenuItem.Text = "Клиенты";
             this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
             // 
@@ -226,19 +242,12 @@
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.Click += new System.EventHandler(this.aboutProgramToolStripMenuItem_Click);
             // 
-            // косметикаДляУслугиToolStripMenuItem
+            // запросыToolStripMenuItem
             // 
-            this.косметикаДляУслугиToolStripMenuItem.Name = "косметикаДляУслугиToolStripMenuItem";
-            this.косметикаДляУслугиToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.косметикаДляУслугиToolStripMenuItem.Text = "Косметика для услуги";
-            this.косметикаДляУслугиToolStripMenuItem.Click += new System.EventHandler(this.косметикаДляУслугиToolStripMenuItem_Click);
-            // 
-            // косметическиеТоварыToolStripMenuItem
-            // 
-            this.косметическиеТоварыToolStripMenuItem.Name = "косметическиеТоварыToolStripMenuItem";
-            this.косметическиеТоварыToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.косметическиеТоварыToolStripMenuItem.Text = "Косметические товары";
-            this.косметическиеТоварыToolStripMenuItem.Click += new System.EventHandler(this.косметическиеТоварыToolStripMenuItem_Click);
+            this.запросыToolStripMenuItem.Name = "запросыToolStripMenuItem";
+            this.запросыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.запросыToolStripMenuItem.Text = "Запросы";
+            this.запросыToolStripMenuItem.Click += new System.EventHandler(this.запросыToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -284,6 +293,7 @@
         private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem косметикаДляУслугиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem косметическиеТоварыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem запросыToolStripMenuItem;
     }
 }
 
